@@ -1,0 +1,13 @@
+{
+  "name": "jp-sync",
+  "version": "1.0.0",
+  "description": "Watch a list of directories and rsync changes to the list of servers specified for each directory.",
+  "type": "module",
+  "main": "jp-sync.mjs",
+  "author": "Jonathan Pugh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jdspugh/jp-sync.git"
+  }
+}
