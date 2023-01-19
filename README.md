@@ -1,3 +1,13 @@
+# Use Cases
+
+## Sync Projects (between local and remote machines)
+
+Use this tool to watch and sync code/files/projects from your local machine to one or more remote servers. Each project can be specified to sync to its own specific destination server and path on that server.
+
+## Personal Cloud
+
+Use the $SERVERS parameter to create a personal fault tolerant cloud that keeps data on a set of servers consistent with each other. Set ```jp-sync``` up as a service so it starts on reboot.
+
 # Usage
 
 ```
@@ -8,7 +18,7 @@ Create a config file, jp-sync.config:
 
 ```
 # Format:
-#   <local directory> <remote server | $SERVERS> <nginx restart?>
+#   <local directory> <remote server location | $SERVERS> <nginx restart?>
 /etc/nginx/conf.d  $SERVERS nginx
 /var/www           $SERVERS
 ```
@@ -21,6 +31,15 @@ $ jp-sync
 
 # Config Details
 
+## Remote Server Location
+
+Each directory can have it's own remote server location specified. The syntax of these is the same as that of an rsync destination e.g.:
+
+```
+project1 fqdn1:/home/username
+project2 fqdn2:/var/www
+```
+
 ## $SERVERS
 
 Entering $SERVERS as the second parameter in a line of the config file will include the comma separated list of servers in the $SERVERS environment variable excluding the current hostname i.e. the list of remote servers for this machine. This can assist is creating your own cloud of fault tolerant servers. To set $SERVERS edit your '/etc/environment' file e.g.
@@ -30,7 +49,7 @@ $ vim /etc/environment
 ```
 ```
 PATH=...
-SERVERS=<domain name 1>,<domain name 2>,...
+SERVERS=<fqdn1>,<fqdn2>,...
 ```
 
 ## nginx
