@@ -8,6 +8,12 @@ Use this tool to watch and sync code/files/projects from your local machine to o
 
 Use the $SERVERS parameter to create a personal fault tolerant cloud that keeps data on a set of servers consistent with each other. Set ```jp-sync``` up as a service so it starts on reboot.
 
+# Requirements
+
+Rsync must be installed on the local and remote machines, preferably with the relavant certificates so that it can access remote servers without asking for the password.
+
+Nginx must of course be installed in order to use the nginx restart feature.
+
 # Usage
 
 ```
@@ -21,6 +27,8 @@ Create a config file, jp-sync.config:
 #   <local directory> <remote server location | $SERVERS> <nginx restart?>
 /etc/nginx/conf.d  $SERVERS nginx
 /var/www           $SERVERS
+project1           fqdn1:/home/username
+project2           fqdn2:/var/www
 ```
 
 Start watching and syncing:
@@ -33,12 +41,7 @@ $ jp-sync
 
 ## Remote Server Location
 
-Each directory can have it's own remote server location specified. The syntax of these is the same as that of an rsync destination e.g.:
-
-```
-project1 fqdn1:/home/username
-project2 fqdn2:/var/www
-```
+Each directory can have it's own remote server location specified. The syntax of these is the same as that of an rsync destination i.e. ```fqdn1:path```
 
 ## $SERVERS
 
