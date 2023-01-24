@@ -1,5 +1,7 @@
 # Use Cases
 
+You can perform all use cases simultaneously by including all the settings you need in one config file.
+
 ## 1. Sync Local to Remotes
 
 Watch and sync directories from a local machine to remote servers.
@@ -10,12 +12,12 @@ Watch and sync directories from a local machine to remote servers.
   {
     "watch": ["/home/user/project1", "/home/user/project2"],
     "rsync": {
-      "locations": ["fqdn1:/var/www", "fqdn2:/var/www"]
+      "locations": ["username1@fqdn1:/var/www", "username2@fqdn2:/var/www"]
     }
   }, {
     "watch": ["/home/user/project3"],
     "rsync": {
-      "locations": ["fqdn3:/home/user"]
+      "locations": ["username3@fqdn3:/home/user"]
     }
   }
 ]
@@ -42,6 +44,20 @@ Create an efficient decentralised, replicated, fault tolerant cloud that keeps d
       "username": "root"
     },
     "postSyncCmd": "service project1.service restart"
+  }
+]
+```
+
+## 3. Backups
+
+```jp-sync.json```
+```
+[
+  {
+    "watch": ["test1"],
+    "rsync": {
+      "destinations": ["test2"],
+    }
   }
 ]
 ```
@@ -83,6 +99,10 @@ An array of local directories to watch for syncing.
 ## rsync locations
 
 An array of rsync locations. The syntax of these is the same as that of an rsync destination i.e. ```fqdn1:path```.
+
+## rsync params
+
+Include any rsync parameters you like. By default the ```-r``` option is included to recursively sync directories.
 
 ## cloud serversEnvVar
 

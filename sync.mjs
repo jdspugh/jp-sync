@@ -24,6 +24,7 @@ function rsync(batchedFiles, rsyncDestinations, cloudServers, rsyncParams) {
 
   /**@ts-ignore*/
   let p = shortestPath(batchedFiles).replace(/\/$/,'') // remove trailing slash
+  rsyncParams.push('-r') // do recursive rsyncs by default
   rsyncDestinations.forEach(l=>{
     D('rsync() rsyncDestinations rsync',[...rsyncParams,p,l].join(' '))
     const s = spawnSync('rsync',[...rsyncParams,p,l],{shell:true,stdio:['inherit','inherit','inherit']})
@@ -77,7 +78,8 @@ function watch(dirs, rsyncDestinations, rsyncParams, cloudUsername, cloudServers
       d=d.toString().slice(0,-1).split('\n')
       D('fswatch stdout.on(data) array d=',d)
       rsync(d,rsyncDestinations,cloudServers,rsyncParams)
-      if (postSyncCmd) spawnSync(postSyncCmd,{uid:0,gid:0})
+      if (postSyncCmd) spawnSync(postSyncCmd)
+      // if (postSyncCmd) spawnSync(postSyncCmd,{uid:0,gid:0})
     })
     //   output fswatch errors
     s.stderr.on('data',d=>D('stderr.on(data) d='+d))
@@ -91,7 +93,7 @@ function watch(dirs, rsyncDestinations, rsyncParams, cloudUsername, cloudServers
 
   // read config file
   try {
-    let c = process.argv[2] || 'sync.json'
+    let c = process.argv[2] || 'jp-sync.json'
     D('Using configuration file:',c)
     j = JSON.parse(await fs.readFile(c,'utf8'))
   } catch (e) {
@@ -107,7 +109,7 @@ function watch(dirs, rsyncDestinations, rsyncParams, cloudUsername, cloudServers
       r['params'] || [],
       u,
       /**@ts-ignore*/
-      e ? process.env[e].split(',').filter(s=>s!=os.hostname()) : [],
+      e ? process.env[e].split(',').filter(s=>s!=os.hostname()).map(s=>`${u}@${s}`) : [],
       entry['postSyncCmd']
     )
   })
