@@ -25,17 +25,19 @@ async function rsync(batchedFiles, rsyncDestinations, cloudServers, rsyncParams)
 
   /**@ts-ignore*/
   let p = (await shortestPath(batchedFiles)).replace(/\/$/,'') // remove trailing slash
-  rsyncParams.push('-r') // do recursive rsyncs by default
-  if(rsyncDestinations)rsyncDestinations.forEach(l=>{
-    D('rsync() rsyncDestinations rsync',[...rsyncParams,p,l].join(' '))
-    const s = spawnSync('rsync',[...rsyncParams,p,l],{shell:true,stdio:['inherit','inherit','inherit']})
-  })
-  if(cloudServers)cloudServers.forEach(l=>{
-    // D('rsync() remoteCloudServers p=',p,'l=',l)
-    const cmd='rsync',params=[...rsyncParams,p,`${l}:${path.dirname(p)}`]
-    D(cmd,params)
-    const s = spawnSync(cmd,params,{shell:true,stdio:['inherit','inherit','inherit']})
-  })
+  rsyncParams = ['-r',...rsyncParams,p] // do recursive rsyncs by default
+  if(rsyncDestinations)rsyncDestinations.forEach(l=>spawnRsync([...rsyncParams,l]))
+  if(cloudServers)cloudServers.forEach(l=>spawnRsync([...rsyncParams,`${l}:${path.dirname(p)}`]))
+}
+
+/**
+ * @param {Array<string>} params
+ * @returns {void}
+ */
+function spawnRsync(params) {
+  const c='rsync' // command
+  D(c,params)
+  spawnSync(c,params,{shell:true,stdio:['inherit','inherit','inherit']})
 }
 
 /**
