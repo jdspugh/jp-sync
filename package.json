@@ -1,6 +1,6 @@
 {
   "name": "@jdsp/jp-sync",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "Watch and rsync directories locally, remotely or in a cloud setup.",
   "keywords": ["watch", "rsync", "backup", "cloud", "live"],
   "bin": {"jp-sync":"jp-sync.js"},

@@ -32,8 +32,7 @@ async function rsync(batchedFiles, rsyncDestinations, cloudServers, rsyncParams)
   })
   if(cloudServers)cloudServers.forEach(l=>{
     D('rsync() remoteCloudServers p=',p,'l=',l)
-    // TODO: specifiy rsync username@fqdn in config file
-    const s = spawnSync('rsync',[...rsyncParams,p,`root@${l}:${path.dirname(p)}`],{shell:true,stdio:['inherit','inherit','inherit']})
+    const s = spawnSync('rsync',[...rsyncParams,p,`${l}:${path.dirname(p)}`],{shell:true,stdio:['inherit','inherit','inherit']})
   })
 }
 
@@ -47,7 +46,7 @@ async function shortestPath(dirs) {
   let sd, sp = Number.MAX_VALUE
   for(const d of dirs) {
     let l = d.split(path.sep).length
-    if ((await fs.lstat(d)).isDirectory()) l++ // fswatch doesn't differentiate directories, so we do it here manually
+    if ((await fs.lstat(d)).isDirectory()) l++ // fswatch doesn't differentiate directories from files, so we do it here manually
     if (l<sp) {sd=d; sp=l}
   }
   /**@ts-ignore*/
@@ -101,9 +100,8 @@ function exit(...a) {D('\x1b[31m',...a,'\x1b[0m\nExiting.');process.exit(1)}
   try {
     let c = process.argv[2] || 'jp-sync.json'
     D(`Using configuration file ${c}`)
-    try {
-      j = JSON.parse(await fs.readFile(c,'utf8'))
-    } catch (e) {exit(`Error parsing ${c}\n`,e)}
+    const s = await fs.readFile(c,'utf8')
+    try { j = JSON.parse(s) } catch (e) {exit(`Error parsing ${c}\n`,e)}
   } catch (e) {
     if ('ENOENT' == e.code){exit('Configuration file not found.')}
   }
@@ -111,7 +109,7 @@ function exit(...a) {D('\x1b[31m',...a,'\x1b[0m\nExiting.');process.exit(1)}
   // process config file
   j.forEach(entry => {
     const c=entry['cloud'], e=c?.['serversEnvVar'], r=entry['rsync'], u=c?.['username']
-    if(e && !process.env[e]) exit(`Environment variable "${e}" not found. This should be a comma separated list of fully qualified domain nnames e.g.: host1.com,host2.com. Set this environment variable in your "/etc/environment" settings file so it persists between server reboots.`)
+    if(e && !process.env[e]) exit(`Environment variable "${e}" not found. This variable should comtain a comma separated list of fully qualified domain names e.g.: host1.com,host2.com. Set this environment variable in your "/etc/environment" settings file so it persists between server reboots.`)
     watch(
       entry['watch'],
       r?.['destinations'],
