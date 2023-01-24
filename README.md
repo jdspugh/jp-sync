@@ -1,6 +1,6 @@
 # Use Cases
 
-## 1. Sync Local to Remote
+## 1. Sync Local to Remotes
 
 Watch and sync directories from a local machine to remote servers.
 
@@ -61,34 +61,40 @@ Ubuntu: ```$ sudo apt install fswatch rsync```
 1. Install:
 
     ```
-    $ npm i -g @jp/jp-sync
+    $ npm install --global @jdsp/sync
     ```
 
-2. Create a config file, ```jp-sync.json```, according to your use case listed above.
+2. Create a config file, ```sync.json```, according to your use case listed above.
 
-3. Start watching and syncing:
+3. Start watching and syncingby executing this sync in the same directory as the config file:
 
     ```
-    $ jp-sync
+    $ ls
+    sync.json
+    $ sync
     ```
 
-# jp-sync.config
+# sync.json
 
 ## watch
 
 An array of local directories to watch for syncing.
 
-## rsyncLocations
+## rsync locations
 
 An array of rsync locations. The syntax of these is the same as that of an rsync destination i.e. ```fqdn1:path```.
 
-## serversEnvVar
+## cloud serversEnvVar
 
 Add a comma separated list of servers to an environemnt variable e.g. ```SERVERS```. To set this edit your ```/etc/environment``` file and add the line:
 
 ```
 SERVERS=<fqdn1>,<fqdn2>,...
 ```
+
+## cloud username
+
+This is the username that will be used to access all servers in ```serversEnvVar```. It is equivalent to ```rsync <username>@<fqdn>:<path> ...```.
 
 ## postSyncCmd
 
