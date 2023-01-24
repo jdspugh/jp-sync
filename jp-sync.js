@@ -31,8 +31,10 @@ async function rsync(batchedFiles, rsyncDestinations, cloudServers, rsyncParams)
     const s = spawnSync('rsync',[...rsyncParams,p,l],{shell:true,stdio:['inherit','inherit','inherit']})
   })
   if(cloudServers)cloudServers.forEach(l=>{
-    D('rsync() remoteCloudServers p=',p,'l=',l)
-    const s = spawnSync('rsync',[...rsyncParams,p,`${l}:${path.dirname(p)}`],{shell:true,stdio:['inherit','inherit','inherit']})
+    // D('rsync() remoteCloudServers p=',p,'l=',l)
+    const cmd='rsync',params=[...rsyncParams,p,`${l}:${path.dirname(p)}`]
+    D(cmd,params)
+    const s = spawnSync(cmd,params,{shell:true,stdio:['inherit','inherit','inherit']})
   })
 }
 
