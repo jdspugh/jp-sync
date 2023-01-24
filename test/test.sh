@@ -1,0 +1,1 @@
+node ../jp-sync.mjs
