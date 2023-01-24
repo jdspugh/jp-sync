@@ -1,9 +1,9 @@
 {
-  "name": "@jdsp/sync",
-  "version": "0.0.2",
+  "name": "@jdsp/jp-sync",
+  "version": "0.0.3",
   "description": "Watch and rsync directories locally, remotely or in a cloud setup.",
   "keywords": ["watch", "rsync", "backup", "cloud", "live"],
-  "bin": {"install-service":"sync.js"},
+  "bin": {"jp-sync":"jp-sync.js"},
   "type": "module",
   "author": "Jonathan Pugh",
   "email": "jdspugh@gmail.com",

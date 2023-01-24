@@ -82,17 +82,25 @@ Ubuntu: ```$ sudo apt install fswatch rsync```
     $ npm install --global @jdsp/sync
     ```
 
-2. Create a config file, ```sync.json```, according to your use case listed above.
+2. Create a config file, ```jp-sync.json```, according to your use case listed above.
 
-3. Start watching and syncingby executing this sync in the same directory as the config file:
+3. Start watching and syncing by executing this sync in the same directory as the config file:
 
     ```
     $ ls
-    sync.json
-    $ sync
+    jp-sync.json
+    $ jp-sync
     ```
 
-# sync.json
+You can specify your own config filename on the command line if you wish e.g.:
+
+```
+$ ls
+my.json
+$ jp-sync my.json
+```
+
+# jp-sync.json
 
 ## watch
 
