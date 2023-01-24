@@ -1,66 +1,85 @@
 # Use Cases
 
-## Sync Projects (between local and remote machines)
+## 1. Sync Local to Remote
 
-Use this tool to watch and sync code/files/projects from your local machine to one or more remote servers. Each project can be specified to sync to its own specific destination server and path on that server.
+Watch and sync directories from a local machine to remote servers.
 
-## Personal Cloud
+```jp-sync.json```
+```
+[
+  {
+    "watch": ["/home/user/project1", "/home/user/project2"],
+    "rsyncLocations": ["fqdn1:/var/www", "fqdn2:/var/www"]
+  }, {
+    "watch": ["/home/user/project3"],
+    "rsyncLocations": ["fqdn3:/home/user"]
+  }
+]
+```
 
-Use the $SERVERS parameter to create a personal fault tolerant cloud that keeps data on a set of servers consistent with each other. Set ```jp-sync``` up as a service so it starts on reboot.
+## 2. Cloud Sync
+
+Create an efficient decentralised, replicated, fault tolerant cloud that keeps data in specified directories consistent with each other on a specified set of servers.
+
+```jp-sync.json```
+```
+[
+  {
+    "watch": ["/etc/nginx/conf.d"],
+    "serversEnvVar": "SERVERS",
+    "postSyncCmd": "service nginx restart"
+  }, {
+    "watch": ["/home/user/project1"],
+    "serversEnvVar": "SERVERS",
+    "postSyncCmd": "service project1.service restart"
+  }
+]
+```
 
 # Requirements
 
-Rsync must be installed on the local and remote machines, preferably with the relavant certificates so that it can access remote servers without asking for the password.
+1. ```fswatch``` must be available on your system.  
 
-Nginx must of course be installed in order to use the nginx restart feature.
+1. ```rsync``` must be installed on the local and remote machines with the relavant certificates configured so that it can sync to remote servers without asking for the password.
+
+MacOS: ```$ brew install fswatch rsync```
+
+Ubuntu: ```$ sudo apt install fswatch rsync```
 
 # Usage
 
-```
-$ npm i -g @jp/jp-sync
-```
+1. Install:
 
-Create a config file, jp-sync.config:
+    ```
+    $ npm i -g @jp/jp-sync
+    ```
 
-```
-# Format:
-#   <local directory> <remote server location | $SERVERS> <nginx restart?>
-/etc/nginx/conf.d  $SERVERS nginx
-/var/www           $SERVERS
-project1           fqdn1:/home/username
-project2           fqdn2:/var/www
-```
+2. Create a config file, ```jp-sync.json```, according to your use case listed above.
 
-Start watching and syncing:
+3. Start watching and syncing:
 
-```
-$ jp-sync
-```
+    ```
+    $ jp-sync
+    ```
 
-# Config Details
+# jp-sync.config
 
-## Remote Server Location
+## watch
 
-Each directory can have it's own remote server location specified. The syntax of these is the same as that of an rsync destination i.e. ```fqdn1:path```
+An array of local directories to watch for syncing.
 
-## $SERVERS
+## rsyncLocations
 
-Entering $SERVERS as the second parameter in a line of the config file will include the comma separated list of servers in the $SERVERS environment variable excluding the current hostname i.e. the list of remote servers for this machine. This can assist is creating your own cloud of fault tolerant servers. To set $SERVERS edit your '/etc/environment' file e.g.
+An array of rsync locations. The syntax of these is the same as that of an rsync destination i.e. ```fqdn1:path```.
+
+## serversEnvVar
+
+Add a comma separated list of servers to an environemnt variable e.g. ```SERVERS```. To set this edit your ```/etc/environment``` file and add the line:
 
 ```
-$ vim /etc/environment
-```
-```
-PATH=...
 SERVERS=<fqdn1>,<fqdn2>,...
 ```
 
-## nginx
+## postSyncCmd
 
-Specifying 'nginx' as the third parameter in a line will restart the nginx service after the rsync has completed. This is useful particularly for syncing nginx configuration files, but may have other uses also specific to your projects.
-
-```
-/etc/nginx/conf.d $SERVERS nginx
-```
-
-The above line in the configuration file will ensure each time files in ```/etc/nginx/conf.d``` directory are changed they are synced with the remote server(s) specified in the second parameter on the line. After syncronizing the nginx server will be restarted.
+Enter a command line command to be executed after the rsync completes e.g.: ```service nginx restart```
