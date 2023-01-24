@@ -1,15 +1,16 @@
 {
   "name": "@jdsp/sync",
-  "version": "0.0.0",
-  "description": "Watch a list of directories and rsync changes to the list of servers specified for each directory.",
-  "bin": {"install-service":"sync.mjs"},
+  "version": "0.0.2",
+  "description": "Watch and rsync directories locally, remotely or in a cloud setup.",
+  "keywords": ["watch", "rsync", "backup", "cloud", "live"],
+  "bin": {"install-service":"sync.js"},
   "type": "module",
   "author": "Jonathan Pugh",
   "email": "jdspugh@gmail.com",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jdspugh/sync.git"
+    "url": "https://github.com/jdspugh/sync"
   },
   "publishConfig": {
     "access": "public"
