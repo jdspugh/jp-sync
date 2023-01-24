@@ -4,7 +4,7 @@ You can perform all use cases simultaneously by including all the settings you n
 
 ## 1. Sync Local to Remotes
 
-Watch and sync directories from a local machine to remote servers.
+Watch and sync directories from a local machine to remote servers. This is useful for software development that needs to sync code and other files with a remote server for live testing. It can also be used for live remote backups.
 
 ```jp-sync.json```
 ```
@@ -48,7 +48,9 @@ Create an efficient decentralised, replicated, fault tolerant cloud that keeps d
 ]
 ```
 
-## 3. Backups
+## 3. Live Local Backups
+
+Backup to an external hard drive connected to your local machine.
 
 ```jp-sync.json```
 ```
