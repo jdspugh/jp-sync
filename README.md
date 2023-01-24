@@ -9,10 +9,14 @@ Watch and sync directories from a local machine to remote servers.
 [
   {
     "watch": ["/home/user/project1", "/home/user/project2"],
-    "rsyncLocations": ["fqdn1:/var/www", "fqdn2:/var/www"]
+    "rsync": {
+      "locations": ["fqdn1:/var/www", "fqdn2:/var/www"]
+    }
   }, {
     "watch": ["/home/user/project3"],
-    "rsyncLocations": ["fqdn3:/home/user"]
+    "rsync": {
+      "locations": ["fqdn3:/home/user"]
+    }
   }
 ]
 ```
@@ -26,11 +30,17 @@ Create an efficient decentralised, replicated, fault tolerant cloud that keeps d
 [
   {
     "watch": ["/etc/nginx/conf.d"],
-    "serversEnvVar": "SERVERS",
+    "cloud": {
+      "serversEnvVar": "SERVERS",
+      "username": "root"
+    },
     "postSyncCmd": "service nginx restart"
   }, {
     "watch": ["/home/user/project1"],
-    "serversEnvVar": "SERVERS",
+    "cloud": {
+      "serversEnvVar": "SERVERS",
+      "username": "root"
+    },
     "postSyncCmd": "service project1.service restart"
   }
 ]

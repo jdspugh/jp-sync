@@ -1,13 +1,17 @@
 {
-  "name": "jp-sync",
-  "version": "1.0.0",
+  "name": "@jdsp/sync",
+  "version": "0.0.0",
   "description": "Watch a list of directories and rsync changes to the list of servers specified for each directory.",
+  "bin": {"install-service":"sync.mjs"},
   "type": "module",
-  "main": "jp-sync.mjs",
   "author": "Jonathan Pugh",
+  "email": "jdspugh@gmail.com",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jdspugh/jp-sync.git"
+    "url": "https://github.com/jdspugh/sync.git"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

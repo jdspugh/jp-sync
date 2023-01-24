@@ -1,0 +1,9 @@
+[
+  {
+    "watch": ["test1"],
+    "rsync": {
+      "destinations": ["test2"],
+      "params": ["-r"]
+    }
+  }
+]
