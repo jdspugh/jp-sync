@@ -7,9 +7,25 @@
 
 Lightweight, cross platform app to efficiently sync sets of files and/or directories recursively to remote servers. Supports Linux and MacOS.
 
+# Installation
+
+1. `jp-watch` must be installed on your system. To install `jp-watch`, follow [these instructions](https://github.com/jdspugh/jp-watch-c).
+
+1. `rsync` must be installed on the local and remote machines with the relavant certificates configured so that it can sync to remote servers without asking for the password.
+
+MacOS: `$ brew install fswatch rsync`
+
+Ubuntu: `$ sudo apt install fswatch rsync`
+
+1. Install jp-sync:
+
+    ```
+    $ npm install --global @jdsp/sync
+    ```
+
 # Use Cases
 
-## Cloud Sync
+## 1. Cloud Sync
 
 Create an efficient decentralised, replicated, fault tolerant cloud that keeps data in specified directories consistent with each other on a specified set of servers.
 
@@ -34,7 +50,7 @@ Create an efficient decentralised, replicated, fault tolerant cloud that keeps d
 ]
 ```
 
-## Sync Local to Remotes
+## 2. Sync Local to Remotes
 
 Watch and sync directories from a local machine to remote servers. This is useful for software development that needs to sync code and other files with a remote server for live testing. It can also be used for live remote backups.
 
@@ -55,7 +71,7 @@ Watch and sync directories from a local machine to remote servers. This is usefu
 ]
 ```
 
-## Live Local Backups
+## 3. Live Local Backups
 
 Backup to an external hard drive connected to your local machine.
 
@@ -71,27 +87,11 @@ Backup to an external hard drive connected to your local machine.
 ]
 ```
 
-# Requirements
-
-1. `jp-watch` must be installed on your system. To install `jp-watch`, follow [these instructions](https://github.com/jdspugh/jp-watch-c).
-
-1. `rsync` must be installed on the local and remote machines with the relavant certificates configured so that it can sync to remote servers without asking for the password.
-
-MacOS: `$ brew install fswatch rsync`
-
-Ubuntu: `$ sudo apt install fswatch rsync`
-
 # Usage
 
-1. Install:
+1. Create a config file, `jp-sync.json`, according to your use case listed above.
 
-    ```
-    $ npm install --global @jdsp/sync
-    ```
-
-2. Create a config file, `jp-sync.json`, according to your use case listed above.
-
-3. Start watching and syncing by executing this sync in the same directory as the config file:
+2. Start watching and syncing by executing this sync in the same directory as the config file:
 
     ```
     $ ls
