@@ -1,3 +1,8 @@
+<div align="center">
+  <img style="height:80px" src="https://jdspugh.github.io/image/jp-sync/jp-sync-logo.png" />
+  <h1>jp-sync</h1>
+</div>
+
 # Use Cases
 
 You can perform all use cases simultaneously by including all the settings you need in one config file.
