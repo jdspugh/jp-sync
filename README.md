@@ -1,5 +1,5 @@
 <div align="center">
-  <img style="height:80px" src="https://jdspugh.github.io/image/jp-sync/jp-sync-logo.png" />
+  <img style="height:95px" src="https://jdspugh.github.io/image/jp-sync/jp-sync-logo.png" />
   <h1>jp-sync</h1>
 </div>
 
