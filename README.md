@@ -12,13 +12,13 @@ Lightweight, cross platform app to efficiently sync sets of files and/or directo
 1. `jp-watch` must be installed on your system. To install `jp-watch`, follow [these instructions](https://github.com/jdspugh/jp-watch-c).
 
 1. `rsync` must be installed on the local and remote machines with the relavant certificates configured so that it can sync to remote servers without asking for the password.
+  
+    MacOS: `$ brew install rsync`
+    
+    Ubuntu: `$ sudo apt install rsync`
 
-MacOS: `$ brew install fswatch rsync`
-
-Ubuntu: `$ sudo apt install fswatch rsync`
-
-1. Install jp-sync:
-
+1. Node.js must be installed be installed on your system, then you can install `jp-sync` using the command:
+  
     ```
     $ npm install --global @jdsp/sync
     ```
