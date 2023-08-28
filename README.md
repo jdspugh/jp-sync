@@ -11,7 +11,7 @@ Lightweight, cross platform app to efficiently sync sets of files and/or directo
 
 1. `jp-watch` must be installed on your system. To install `jp-watch`, follow [these instructions](https://github.com/jdspugh/jp-watch-c).
 
-1. `rsync` must be installed on the local and remote machines with the relavant certificates configured so that it can sync to remote servers without asking for the password.
+1. `rsync` must be installed on the local and remote machines with the relavant certificates configured so that it can sync as root to remote servers without asking for the password.
   
     MacOS: `$ brew install rsync`
     
