@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "oneOf": [
+      {
+        "properties": {
+          "watch": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "An array of local directories to watch for syncing."
+          },
+          "cloud": {
+            "type": "object",
+            "properties": {
+              "serversEnvVar": {
+                "type": "string",
+                "description": "Add a comma separated list of servers to an environment variable e.g. SERVERS. To set this edit your /etc/environment file and add the line: SERVERS=<fqdn1>,<fqdn2>,..."
+              },
+              "username": {
+                "type": "string",
+                "description": "This is the username that will be used to access all servers in serversEnvVar. It is equivalent to rsync <username>@<fqdn>:<path> ..."
+              }
+            },
+            "required": ["serversEnvVar", "username"]
+          },
+          "postSyncShellCmd": {
+            "type": "string",
+            "description": "Enter a command line command to be executed after the rsync completes e.g.: service nginx restart"
+          }
+        },
+        "required": ["watch", "cloud"]
+      },
+      {
+        "properties": {
+          "watch": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rsync": {
+            "type": "object",
+            "properties": {
+              "locations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description":"An array of rsync locations. The syntax of these is the same as that of an rsync destination i.e. fqdn1:path."
+              },
+              "params": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description":"Include any rsync parameters you like. By default the -r option is included to recursively sync directories."
+              }
+            },
+            "required": ["locations"]
+          }
+        },
+        "required": ["watch", "rsync"]
+      }
+    ]
+  }
+}

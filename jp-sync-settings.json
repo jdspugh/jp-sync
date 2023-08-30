@@ -1,0 +1,17 @@
+[
+  {
+    "watch": ["/etc/nginx/conf.d"],
+    "cloud": {
+      "serversEnvVar": "SERVERS",
+      "username": "root"
+    },
+    "postSyncShellCmd": "service nginx restart"
+  },
+  {
+    "watch": [],
+    "cloud": {
+      "serversEnvVar": "SERVERS",
+      "username": "root"
+    }
+  }
+]
